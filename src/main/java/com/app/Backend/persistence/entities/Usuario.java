@@ -23,16 +23,23 @@ public class Usuario {
             nullable = false
     )
     private String dni;
-
     private String nombre;
     private String apellido;
     private String telefono;
+
+    @Column(
+            unique = true,
+            nullable = false
+    )
     private String email;
+
+    @Column(
+            unique = true,
+            nullable = false
+    )
     private String usuario;
     private String password;
 
     @OneToMany(mappedBy = "usuario")
     private List<Pedido> pedidos;
-    @OneToOne(mappedBy = "usuario")
-    private HistorialPedidos historialPedidos;
 }

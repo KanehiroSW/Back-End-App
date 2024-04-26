@@ -19,8 +19,14 @@ public class Producto {
 
     @Column(name = "nombre_producto")
     private String nombreProducto;
+    private String descripcion;
 
     private int cantidad;
     private double precio;
     private String imagen;
+
+    @ManyToOne
+    private Tienda tienda;
+
+    private int estado;
 }

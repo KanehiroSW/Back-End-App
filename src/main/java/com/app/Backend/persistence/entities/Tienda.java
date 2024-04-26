@@ -18,10 +18,18 @@ public class Tienda {
     @Column(name = "id_tienda")
     private Long idTienda;
 
-    private String nombre;
+    @Column(name = "nombre_tienda")
+    private String nombreTienda;
+
     private String direccion;
-    private String informacionContacto;
+    private String telefono;
     private String imagen;
+    private String usuario;
+    private String password;
+    private int estado;
+
+    @OneToMany(mappedBy = "tienda")
+    private List<Pedido> pedidos;
 
     @OneToMany(mappedBy = "tienda")
     private List<Producto> productos;

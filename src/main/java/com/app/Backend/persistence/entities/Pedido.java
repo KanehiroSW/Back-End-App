@@ -18,18 +18,31 @@ public class Pedido {
     @Column(name = "id_pedido")
     private Long idPedido;
 
+    @Column(name = "numero_serie")
+    private String numeroSerie;
+
+    @Column(name = "direccion_entrega")
+    private String direccionEntrega;
+
+    @Column(name = "fecha_pedido")
+    private Date fechaPedido;
+
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "tienda_id")
+    @JoinColumn(name = "id_tienda")
     private Tienda tienda;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-    private List<DetallePedido> detalles;
+    @OneToMany(
+            mappedBy = "pedido",
+            cascade = CascadeType.ALL
+    )
+    private List<DetallePedido> detallePedidos;
 
-    private String direccionEntrega;
+
+
     @Enumerated(EnumType.STRING)
     private EstadoPedido estado;
 }

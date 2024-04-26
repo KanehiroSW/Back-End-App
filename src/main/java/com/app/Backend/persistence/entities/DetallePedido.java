@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Table(
-        name = "detallePedidos"
+        name = "tbl_detalle_pedidos"
 )
 public class DetallePedido {
     @Id
@@ -18,12 +18,18 @@ public class DetallePedido {
     private Long idDetalle;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id")
+    @JoinColumn(name = "id_pedido")
     private Pedido pedido;
 
     @ManyToOne
-    @JoinColumn(name = "producto_id")
+    @JoinColumn(name = "id_producto")
     private Producto producto;
 
     private int cantidad;
+
+    @Column(name = "precio_unitario")
+    private Double precioUnitario;
+
+    @Column(name = "total_detalle")
+    private Double totalDetalle;
 }
