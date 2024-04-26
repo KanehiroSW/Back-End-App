@@ -41,9 +41,10 @@ public class Pedido {
     )
     private List<DetallePedido> detallePedidos;
 
-
-
     @Enumerated(EnumType.STRING)
-    private EstadoPedido estado;
+    @Column(name = "estado_pedido")
+    private EstadoPedido estadoPedido;
+
+    private int estado;
 }
 
