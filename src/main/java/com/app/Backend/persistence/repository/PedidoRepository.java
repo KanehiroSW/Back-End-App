@@ -9,11 +9,4 @@ import java.util.List;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
-    @Query(" SELECT P FROM Pedido P WHERE P.estado = 1 ")
-    List<Pedido> findAllPedidos();
-
-    @Transactional
-    @Modifying
-    @Query(" UPDATE Pedido P SET P.estado = 0 WHERE P.idPedido = :idPedido ")
-    void disablePedido(@Param("idPedido") Long idPedido);
 }

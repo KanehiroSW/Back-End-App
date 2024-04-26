@@ -20,8 +20,7 @@ public class Producto {
     @Column(name = "nombre_producto")
     private String nombreProducto;
     private String descripcion;
-
-    private int stock;
+    
     private double precio;
     private String imagen;
 

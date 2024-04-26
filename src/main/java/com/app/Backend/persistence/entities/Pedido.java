@@ -44,7 +44,5 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_pedido")
     private EstadoPedido estadoPedido;
-
-    private int estado;
 }
 
