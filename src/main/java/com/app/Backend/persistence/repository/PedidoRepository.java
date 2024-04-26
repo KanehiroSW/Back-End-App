@@ -15,5 +15,5 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     @Transactional
     @Modifying
     @Query(" UPDATE Pedido P SET P.estado = 0 WHERE P.idPedido = :idPedido ")
-    void disableProducto(@Param("idPedido") Long idPedido);
+    void disablePedido(@Param("idPedido") Long idPedido);
 }

@@ -20,7 +20,9 @@ public class Tienda {
 
     @Column(name = "nombre_tienda")
     private String nombreTienda;
-
+    private String nombrePropietario;
+    private String dniPropietario;
+    private String ruc;
     private String direccion;
     private String telefono;
     private String imagen;
