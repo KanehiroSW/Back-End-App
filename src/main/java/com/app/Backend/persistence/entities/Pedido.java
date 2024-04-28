@@ -1,5 +1,6 @@
 package com.app.Backend.persistence.entities;
 
+import com.app.Backend.persistence.entities.Usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.*;

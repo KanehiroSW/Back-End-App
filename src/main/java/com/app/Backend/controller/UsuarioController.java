@@ -1,6 +1,35 @@
 package com.app.Backend.controller;
 
+import com.app.Backend.controller.dto.UsuarioDTO;
+import com.app.Backend.persistence.entities.Usuario.UsuarioRequest;
+import com.app.Backend.persistence.entities.Usuario.UsuarioResponse;
+import com.app.Backend.service.UsuarioServiceImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMaping("/usuarios")
+@RequestMapping(value = "/api/v1/usuario")
+@RequiredArgsConstructor
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class UsuarioController {
+
+    private final UsuarioServiceImpl usuarioService;
+
+    @GetMapping(value = "{idUsuario}")
+    public ResponseEntity<UsuarioDTO> getUser(@PathVariable Long idUsuario)
+    {
+        UsuarioDTO usuarioDTO = usuarioService.getUsuario(idUsuario);
+        if (usuarioDTO == null)
+        {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(usuarioDTO);
+    }
+
+    @PutMapping()
+    public ResponseEntity<UsuarioResponse> updateUsuario(@RequestBody UsuarioRequest usuarioRequest)
+    {
+        return ResponseEntity.ok(usuarioService.actualizarUsuario(usuarioRequest));
+    }
 }

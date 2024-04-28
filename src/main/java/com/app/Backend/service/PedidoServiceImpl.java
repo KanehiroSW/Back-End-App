@@ -4,7 +4,7 @@ import com.app.Backend.exception.ProductoNotFoundException;
 import com.app.Backend.persistence.entities.Pedido;
 import com.app.Backend.persistence.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
@@ -15,7 +15,7 @@ public class PedidoServiceImpl implements PedidoService{
 
     @Override
     public List<Pedido> getAllPedidos() {
-        return pedidoRepository.findAllPedidos();
+        return pedidoRepository.findAll();
     }
 
     @Override

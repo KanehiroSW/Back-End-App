@@ -5,15 +5,18 @@ import com.app.Backend.persistence.entities.Producto;
 import com.app.Backend.persistence.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.util.*;
 
 @Service
 public class ProductoServiceImpl implements ProductoService {
 
     @Autowired
     private ProductoRepository productoRepository;
+
+    @Autowired
+    private UploadFileService uploadFileService;
 
     @Override
     public List<Producto> getAllProductos() {
@@ -39,20 +42,40 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public Producto saveProducto(Producto producto) {
+    public Producto saveProducto(Producto producto, MultipartFile file) throws IOException {
+        if (producto.getIdProducto() == null) {
+            String nombreImagen= uploadFileService.saveImage(file);
+            producto.setImagen(nombreImagen);
+        } else {
+            throw new IllegalArgumentException("No se puede crear un producto existente.");
+        }
+        producto.setEstado(1);
         return productoRepository.save(producto);
     }
 
     @Override
-    public void updateProducto(Long idProducto, Producto producto) {
+    public void updateProducto(Long idProducto, Producto producto, MultipartFile file) throws IOException {
+
         Optional<Producto> productoOptional = getProductoById(idProducto);
+
         if (productoOptional.isEmpty()) {
+
             Producto productoBD = productoOptional.get();
             productoBD.setNombreProducto(producto.getNombreProducto());
             productoBD.setDescripcion(producto.getDescripcion());
-            productoBD.setStock(producto.getStock());
             productoBD.setPrecio(producto.getPrecio());
-            productoRepository.save(productoBD);
+
+            if (file.isEmpty()) {
+                producto.setImagen(productoBD.getImagen());
+            } else {
+                if (!productoBD.getImagen().equals("default.jpg")) {
+                    uploadFileService.deleteImage(productoBD.getImagen());
+                }
+                String nombreImagen = uploadFileService.saveImage(file);
+                producto.setImagen(nombreImagen);
+//                producto.setUsuario(productoBD.getUsuario());
+                productoRepository.save(productoBD);
+            }
         } else {
             throw new ProductoNotFoundException("¡Producto no encontrado!");
         }
@@ -60,7 +83,14 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public void deleteProductoById(Long idProducto) {
+
         if (idProducto != null) {
+            Optional<Producto> productoOptional = getProductoById(idProducto);
+            Producto productoBD = productoOptional.get();
+
+            if (!productoBD.getImagen().equals("default.jpg")) {
+                uploadFileService.deleteImage(productoBD.getImagen());
+            }
             productoRepository.disableProducto(idProducto);
         } else {
             throw new ProductoNotFoundException("¡Producto no encontrado!");
