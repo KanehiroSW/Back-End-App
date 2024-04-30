@@ -12,8 +12,8 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     /*ENCONTRAR UN USUARIO POR EMAIL*/
-    @Query(" SELECT U FROM Usuario U WHERE U.email = :email ")
-    Optional<Usuario> findByEmail(@Param("email") String email);
+    @Query(" SELECT U FROM Usuario U WHERE U.dni = :dni ")
+    Optional<Usuario> findByDni(@Param("dni") String dni);
 
     /*ACTUALIZAR USUARIO*/
     @Modifying()
@@ -21,12 +21,14 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
             "U.nombre = :nombre," +
             "U.apellido = :apellido," +
             "U.telefono = :telefono," +
+            "U.email = :email," +
             "U.usuario = :usuario WHERE U.idUsuario = :idUsuario" )
     void updateUsuario(@Param(value = "idUsuario") Long idUsuario,
                     @Param(value = "dni") String dni,
                     @Param(value = "nombre") String nombre,
                     @Param(value = "apellido") String apellido,
                     @Param(value = "telefono") String telefono,
+                    @Param(value = "email") String email,
                     @Param(value = "usuario") String usuario);
 
     /*DESACTIVAR USUARIO*/

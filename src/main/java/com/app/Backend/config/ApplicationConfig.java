@@ -1,14 +1,12 @@
 package com.app.Backend.config;
 
 import com.app.Backend.persistence.repository.UsuarioRepository;
-import com.app.Backend.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -43,7 +41,7 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailService() {
-        return email -> usuarioRepository.findByEmail(email)
+        return dni -> usuarioRepository.findByDni(dni)
                 .orElseThrow(()-> new UsernameNotFoundException("¡Usuario no encontrado!"));
     }
 }

@@ -56,7 +56,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return usuario;
+        return dni;
     }
 
     @Override

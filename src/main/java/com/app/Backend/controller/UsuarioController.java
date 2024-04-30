@@ -3,7 +3,7 @@ package com.app.Backend.controller;
 import com.app.Backend.controller.dto.UsuarioDTO;
 import com.app.Backend.persistence.entities.Usuario.UsuarioRequest;
 import com.app.Backend.persistence.entities.Usuario.UsuarioResponse;
-import com.app.Backend.service.UsuarioServiceImpl;
+import com.app.Backend.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = {"http://localhost:4200"})
 public class UsuarioController {
 
-    private final UsuarioServiceImpl usuarioService;
+    private final UsuarioService usuarioService;
 
     @GetMapping(value = "{idUsuario}")
     public ResponseEntity<UsuarioDTO> getUser(@PathVariable Long idUsuario)
