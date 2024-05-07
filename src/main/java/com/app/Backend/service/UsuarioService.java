@@ -7,11 +7,17 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+
+    public Optional<Usuario> getUsuarioById(Long idUsuario) {
+        return usuarioRepository.findUsuarioById(idUsuario);
+    }
 
     @Transactional
     public UsuarioResponse actualizarUsuario(UsuarioRequest userRequest) {

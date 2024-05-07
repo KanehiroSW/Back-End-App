@@ -1,5 +1,6 @@
 package com.app.Backend.persistence.entities;
 
+import com.app.Backend.persistence.entities.Tienda.Tienda;
 import com.app.Backend.persistence.entities.Usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
@@ -41,6 +42,9 @@ public class Pedido {
             cascade = CascadeType.ALL
     )
     private List<DetallePedido> detallePedidos;
+
+    @Column(name = "total_pedido")
+    private double totalPedido;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_pedido")

@@ -1,8 +1,10 @@
-package com.app.Backend.Auth;
+package com.app.Backend.Auth.AuthUsuario;
 
 import com.app.Backend.Jwt.JwtService;
 import com.app.Backend.persistence.entities.Usuario.Usuario;
 import com.app.Backend.persistence.repository.UsuarioRepository;
+import com.app.Backend.service.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,26 +12,32 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final HttpSession session;
 
-    public AuthResponse login(LoginRequest request) {
+    public AuthUsuarioResponse login(LoginUsuarioRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getDni(), request.getPassword()));
         UserDetails usuario = usuarioRepository.findByDni(request.getDni()).orElseThrow();
+        /*ESTABLECER SESION USUARIO*/
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByDni(request.getDni());
+        session.setAttribute("sesion_id_usuario", usuarioOptional.get().getIdUsuario());
+
         String token = jwtService.getToken(usuario);
-        return AuthResponse.builder()
+        return AuthUsuarioResponse.builder()
                 .token(token)
                 .build();
-
     }
 
-    public AuthResponse register(RegisterRequest request) {
+    public AuthUsuarioResponse register(RegisterUsuarioRequest request) {
         Usuario usuario = Usuario.builder()
                 .dni(request.getDni())
                 .email(request.getEmail())
@@ -43,7 +51,7 @@ public class AuthService {
 
         usuarioRepository.save(usuario);
 
-        return AuthResponse.builder()
+        return AuthUsuarioResponse.builder()
                 .token(jwtService.getToken(usuario))
                 .build();
     }

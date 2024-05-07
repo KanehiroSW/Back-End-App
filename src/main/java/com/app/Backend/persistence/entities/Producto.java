@@ -1,5 +1,6 @@
 package com.app.Backend.persistence.entities;
 
+import com.app.Backend.persistence.entities.Tienda.Tienda;
 import jakarta.persistence.*;
 import lombok.*;
 

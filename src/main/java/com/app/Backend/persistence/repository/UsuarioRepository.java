@@ -15,6 +15,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query(" SELECT U FROM Usuario U WHERE U.dni = :dni ")
     Optional<Usuario> findByDni(@Param("dni") String dni);
 
+    /*ENCONTRAR UN USUARIO POR ID*/
+    @Query(" SELECT U FROM Usuario U WHERE U.idUsuario = :idUsuario ")
+    Optional<Usuario> findUsuarioById(@Param("idUsuario") Long idUsuario);
+
     /*ACTUALIZAR USUARIO*/
     @Modifying()
     @Query(" UPDATE Usuario U SET U.dni = :dni," +

@@ -9,5 +9,5 @@ public interface PedidoService {
     List<Pedido> getAllPedidos();
     Optional<Pedido> getPedidoById(Long idPedido);
     Pedido savePedido(Pedido pedido);
-    void deletePedidoById(Long idPedido);
+    String generarNumeroSerie();
 }

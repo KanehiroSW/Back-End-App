@@ -1,4 +1,4 @@
-package com.app.Backend.Auth;
+package com.app.Backend.Auth.AuthUsuario;
 
 import lombok.*;
 
@@ -6,6 +6,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AuthResponse {
+public class AuthUsuarioResponse {
     String token;
 }

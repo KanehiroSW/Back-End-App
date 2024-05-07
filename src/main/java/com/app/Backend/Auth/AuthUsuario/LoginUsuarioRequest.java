@@ -1,4 +1,4 @@
-package com.app.Backend.Auth;
+package com.app.Backend.Auth.AuthUsuario;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginRequest {
+public class LoginUsuarioRequest {
     String dni;
     String password;
 }

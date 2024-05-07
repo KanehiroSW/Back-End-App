@@ -1,25 +1,23 @@
-package com.app.Backend.Auth;
+package com.app.Backend.Auth.AuthUsuario;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/authUser")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:4200"})
-public class AuthController {
-    private final AuthService authService;
+@CrossOrigin
+public class AuthUsuarioController {
+    private final AuthUsuarioService authService;
 
     @PostMapping(value = "login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request)
-    {
+    public ResponseEntity<AuthUsuarioResponse> login(@RequestBody LoginUsuarioRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 
     @PostMapping(value = "register")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request)
-    {
+    public ResponseEntity<AuthUsuarioResponse> register(@RequestBody RegisterUsuarioRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 }

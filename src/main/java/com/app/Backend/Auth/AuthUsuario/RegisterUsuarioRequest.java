@@ -1,4 +1,4 @@
-package com.app.Backend.Auth;
+package com.app.Backend.Auth.AuthUsuario;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
+public class RegisterUsuarioRequest {
     private String dni;
     private String nombre;
     private String apellido;

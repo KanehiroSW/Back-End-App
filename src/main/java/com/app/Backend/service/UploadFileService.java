@@ -9,7 +9,7 @@ import java.nio.file.*;
 public class UploadFileService {
     private String folder="images//";
 
-    public String saveImage(MultipartFile file) throws IOException {
+    public String saveImageProducto(MultipartFile file) throws IOException {
         if(!file.isEmpty()) {
             byte [] bytes = file.getBytes();
             Path path = Paths.get(folder+file.getOriginalFilename());
@@ -19,7 +19,23 @@ public class UploadFileService {
         return "default.jpg";
     }
 
-    public void deleteImage(String nombre) {
+    public String saveImageTienda(MultipartFile file) throws IOException {
+        if(!file.isEmpty()) {
+            byte [] bytes = file.getBytes();
+            Path path = Paths.get(folder+file.getOriginalFilename());
+            Files.write(path, bytes);
+            return file.getOriginalFilename();
+        }
+        return "default.jpg";
+    }
+
+    public void deleteImageProducto(String nombre) {
+        String ruta="images//";
+        File file = new File(ruta+nombre);
+        file.delete();
+    }
+
+    public void deleteImageTienda(String nombre) {
         String ruta="images//";
         File file = new File(ruta+nombre);
         file.delete();
