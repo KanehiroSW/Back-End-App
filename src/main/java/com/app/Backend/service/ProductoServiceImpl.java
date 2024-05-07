@@ -44,7 +44,7 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public Producto saveProducto(Producto producto, MultipartFile file) throws IOException {
         if (producto.getIdProducto() == null) {
-            String nombreImagen= uploadFileService.saveImage(file);
+            String nombreImagen= uploadFileService.saveImageProducto(file);
             producto.setImagen(nombreImagen);
         } else {
             throw new IllegalArgumentException("No se puede crear un producto existente.");
@@ -69,9 +69,9 @@ public class ProductoServiceImpl implements ProductoService {
                 producto.setImagen(productoBD.getImagen());
             } else {
                 if (!productoBD.getImagen().equals("default.jpg")) {
-                    uploadFileService.deleteImage(productoBD.getImagen());
+                    uploadFileService.deleteImageProducto(productoBD.getImagen());
                 }
-                String nombreImagen = uploadFileService.saveImage(file);
+                String nombreImagen = uploadFileService.saveImageProducto(file);
                 producto.setImagen(nombreImagen);
 //                producto.setUsuario(productoBD.getUsuario());
                 productoRepository.save(productoBD);
@@ -89,7 +89,7 @@ public class ProductoServiceImpl implements ProductoService {
             Producto productoBD = productoOptional.get();
 
             if (!productoBD.getImagen().equals("default.jpg")) {
-                uploadFileService.deleteImage(productoBD.getImagen());
+                uploadFileService.deleteImageProducto(productoBD.getImagen());
             }
             productoRepository.disableProducto(idProducto);
         } else {
