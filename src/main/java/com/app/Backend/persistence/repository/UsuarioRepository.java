@@ -13,7 +13,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     /*ENCONTRAR UN USUARIO POR EMAIL*/
     @Query(" SELECT U FROM Usuario U WHERE U.dni = :dni ")
-    Optional<Usuario> findByDni(@Param("dni") String dni);
+    Optional<Usuario> findUsuarioByDni(@Param("dni") String dni);
 
     /*ENCONTRAR UN USUARIO POR ID*/
     @Query(" SELECT U FROM Usuario U WHERE U.idUsuario = :idUsuario ")

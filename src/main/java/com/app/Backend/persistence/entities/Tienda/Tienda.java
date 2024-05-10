@@ -1,12 +1,10 @@
 package com.app.Backend.persistence.entities.Tienda;
 
-import com.app.Backend.persistence.entities.Pedido;
-import com.app.Backend.persistence.entities.Producto;
+import com.app.Backend.persistence.entities.*;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
 

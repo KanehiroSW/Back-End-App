@@ -1,12 +1,11 @@
 package com.app.Backend.Auth.AuthTienda;
 
-import com.app.Backend.Auth.AuthUsuario.AuthUsuarioResponse;
-import com.app.Backend.Auth.AuthUsuario.AuthUsuarioService;
-import com.app.Backend.Auth.AuthUsuario.LoginUsuarioRequest;
-import com.app.Backend.Auth.AuthUsuario.RegisterUsuarioRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/authStore")
@@ -21,7 +20,7 @@ public class AuthTiendaController {
     }
 
     @PostMapping(value = "register")
-    public ResponseEntity<AuthTiendaResponse> register(@RequestBody RegisterTiendaRequest request) {
-        return ResponseEntity.ok(authService.register(request));
+    public ResponseEntity<AuthTiendaResponse> register(@RequestBody RegisterTiendaRequest request, @RequestParam("img") MultipartFile file) throws IOException {
+        return ResponseEntity.ok(authService.register(request, file));
     }
 }

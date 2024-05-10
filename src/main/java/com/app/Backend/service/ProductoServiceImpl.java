@@ -5,6 +5,7 @@ import com.app.Backend.persistence.entities.Producto;
 import com.app.Backend.persistence.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.*;
@@ -42,7 +43,7 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public Producto saveProducto(Producto producto, MultipartFile file) throws IOException {
+    public Producto saveProducto(@RequestBody Producto producto, MultipartFile file) throws IOException {
         if (producto.getIdProducto() == null) {
             String nombreImagen= uploadFileService.saveImageProducto(file);
             producto.setImagen(nombreImagen);

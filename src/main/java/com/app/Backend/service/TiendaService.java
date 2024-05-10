@@ -9,8 +9,12 @@ import com.app.Backend.persistence.entities.Usuario.Usuario;
 import com.app.Backend.persistence.repository.TiendaRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TiendaService {
     private final TiendaRepository tiendaRepository;
+    private final UploadFileService uploadFileService;
 
     public List<Tienda> listarTiendas() {
         return tiendaRepository.findAllTienda();
@@ -50,7 +55,7 @@ public class TiendaService {
                 tienda.getTelefono(),
                 tienda.getImagen());
 
-        return new TiendaResponse("¡El usuario se actualizó satisfactoriamente!");
+        return new TiendaResponse("¡La tienda se actualizó satisfactoriamente!");
     }
 
     public TiendaDTO getTienda(Long idTienda) {

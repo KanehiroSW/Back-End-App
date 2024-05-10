@@ -26,9 +26,9 @@ public class AuthUsuarioService {
 
     public AuthUsuarioResponse login(LoginUsuarioRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getDni(), request.getPassword()));
-        UserDetails usuario = usuarioRepository.findByDni(request.getDni()).orElseThrow();
+        UserDetails usuario = usuarioRepository.findUsuarioByDni(request.getDni()).orElseThrow();
         /*ESTABLECER SESION USUARIO*/
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByDni(request.getDni());
+        Optional<Usuario> usuarioOptional = usuarioRepository.findUsuarioByDni(request.getDni());
         session.setAttribute("sesion_id_usuario", usuarioOptional.get().getIdUsuario());
 
         String token = jwtService.getToken(usuario);

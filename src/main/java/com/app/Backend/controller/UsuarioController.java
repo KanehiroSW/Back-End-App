@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/v1/usuario")
+@RequestMapping(value = "/api/usuario")
 @RequiredArgsConstructor
 @CrossOrigin
 public class UsuarioController {

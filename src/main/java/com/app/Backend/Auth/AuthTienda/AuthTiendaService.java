@@ -8,6 +8,7 @@ import com.app.Backend.persistence.entities.Tienda.Tienda;
 import com.app.Backend.persistence.entities.Usuario.Usuario;
 import com.app.Backend.persistence.repository.TiendaRepository;
 import com.app.Backend.persistence.repository.UsuarioRepository;
+import com.app.Backend.service.UploadFileService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +16,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -23,6 +26,7 @@ import java.util.Optional;
 public class AuthTiendaService {
 
     private final TiendaRepository tiendaRepository;
+    private final UploadFileService uploadFileService;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -31,7 +35,7 @@ public class AuthTiendaService {
     public AuthTiendaResponse login(LoginTiendaRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getDniPropietario(), request.getPassword()));
         UserDetails tienda = tiendaRepository.findTiendaByDni(request.getDniPropietario()).orElseThrow();
-        /*ESTABLECER SESION USUARIO*/
+        /*ESTABLECER SESION TIENDA*/
         Optional<Tienda> tiendaOptional = tiendaRepository.findTiendaByDni(request.getDniPropietario());
         session.setAttribute("sesion_id_tienda", tiendaOptional.get().getIdTienda());
 
@@ -41,7 +45,7 @@ public class AuthTiendaService {
                 .build();
     }
 
-    public AuthTiendaResponse register(RegisterTiendaRequest request) {
+    public AuthTiendaResponse register(RegisterTiendaRequest request, MultipartFile file) throws IOException {
         Tienda tienda = Tienda.builder()
                 .nombreTienda(request.getNombreTienda())
                 .nombrePropietario(request.getNombrePropietario())
@@ -49,10 +53,16 @@ public class AuthTiendaService {
                 .direccion(request.getDireccion())
                 .email(request.getEmail())
                 .telefono(request.getTelefono())
-                .imagen(request.getImagen())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .estado(1)
                 .build();
+
+        if (tienda.getIdTienda() == null) {
+            String nombreImagen = uploadFileService.saveImageTienda(file);
+            tienda.setImagen(nombreImagen);
+        } else {
+            throw new IllegalArgumentException("No se puede crear un producto existente.");
+        }
 
         tiendaRepository.save(tienda);
 

@@ -1,5 +1,8 @@
 package com.app.Backend.config;
 
+import com.app.Backend.persistence.entities.Tienda.Tienda;
+import com.app.Backend.persistence.entities.Usuario.Usuario;
+import com.app.Backend.persistence.repository.TiendaRepository;
 import com.app.Backend.persistence.repository.UsuarioRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,11 +16,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
     private final UsuarioRepository usuarioRepository;
+    private final TiendaRepository tiendaRepository;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception
@@ -41,7 +47,16 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailService() {
-        return dni -> usuarioRepository.findByDni(dni)
-                .orElseThrow(()-> new UsernameNotFoundException("¡Usuario no encontrado!"));
+        return dni -> {
+            Optional<Usuario> usuarioOptional = usuarioRepository.findUsuarioByDni(dni);
+            if (usuarioOptional.isPresent()) {
+                return usuarioOptional.get();
+            }
+            Optional<Tienda> tiendaOptional = tiendaRepository.findTiendaByDni(dni);
+            if (tiendaOptional.isPresent()) {
+                return tiendaOptional.get();
+            }
+            throw new UsernameNotFoundException("¡Entidad no encontrada!");
+        };
     }
 }
