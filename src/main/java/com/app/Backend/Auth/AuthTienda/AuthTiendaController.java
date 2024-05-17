@@ -1,5 +1,6 @@
 package com.app.Backend.Auth.AuthTienda;
 
+import com.app.Backend.persistence.entities.Tienda.Tienda;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,18 @@ public class AuthTiendaController {
         return ResponseEntity.ok(authService.login(request));
     }
 
+//    @PostMapping(value = "register")
+//    public ResponseEntity<AuthTiendaResponse> register(@RequestBody RegisterTiendaRequest request,MultipartFile file) throws IOException {
+//        return ResponseEntity.ok(authService.register(request, file));
+//    }
+
     @PostMapping(value = "register")
-    public ResponseEntity<AuthTiendaResponse> register(@RequestBody RegisterTiendaRequest request, @RequestParam("img") MultipartFile file) throws IOException {
-        return ResponseEntity.ok(authService.register(request, file));
+    public ResponseEntity<AuthTiendaResponse> saveTienda(@RequestPart("tienda") RegisterTiendaRequest request, @RequestPart("file") MultipartFile file) {
+        try {
+            AuthTiendaResponse savedTienda = authService.register(request, file);
+            return ResponseEntity.ok(savedTienda);
+        } catch (IOException e) {
+            return ResponseEntity.status(500).build();
+        }
     }
 }

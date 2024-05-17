@@ -1,8 +1,7 @@
 package com.app.Backend.controller;
 
 import com.app.Backend.controller.dto.TiendaDTO;
-import com.app.Backend.persistence.entities.Tienda.TiendaRequest;
-import com.app.Backend.persistence.entities.Tienda.TiendaResponse;
+import com.app.Backend.persistence.entities.Tienda.*;
 import com.app.Backend.service.TiendaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

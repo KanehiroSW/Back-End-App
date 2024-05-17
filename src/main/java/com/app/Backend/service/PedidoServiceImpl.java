@@ -2,6 +2,8 @@ package com.app.Backend.service;
 
 import com.app.Backend.exception.ProductoNotFoundException;
 import com.app.Backend.persistence.entities.Pedido;
+import com.app.Backend.persistence.entities.Tienda.Tienda;
+import com.app.Backend.persistence.entities.Usuario.Usuario;
 import com.app.Backend.persistence.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,11 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
+    public Pedido savePedido(Pedido pedido) {
+        return pedidoRepository.save(pedido);
+    }
+
+    @Override
     public Optional<Pedido> getPedidoById(Long idPedido) {
         if (idPedido != null) {
             return pedidoRepository.findById(idPedido);
@@ -28,8 +35,13 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public Pedido savePedido(Pedido pedido) {
-        return pedidoRepository.save(pedido);
+    public List<Pedido> getPedidosByUsuario(Usuario usuario) {
+        return pedidoRepository.findByUsuario(usuario);
+    }
+
+    @Override
+    public List<Pedido> getPedidosByTienda(Tienda tienda) {
+        return pedidoRepository.findByTienda(tienda);
     }
 
     @Override
