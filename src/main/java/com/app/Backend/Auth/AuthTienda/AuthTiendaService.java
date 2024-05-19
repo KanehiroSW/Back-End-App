@@ -46,6 +46,12 @@ public class AuthTiendaService {
     }
 
     public AuthTiendaResponse register(RegisterTiendaRequest request, MultipartFile file) throws IOException {
+
+        Tienda tiendaExistente = tiendaRepository.findTiendaByDni(request.getDniPropietario()).orElse(null);
+        if (tiendaExistente != null) {
+            throw new IllegalArgumentException("No se puede crear una tienda existente.");
+        }
+
         Tienda tienda = Tienda.builder()
                 .nombreTienda(request.getNombreTienda())
                 .nombrePropietario(request.getNombrePropietario())
@@ -61,7 +67,7 @@ public class AuthTiendaService {
             String nombreImagen = uploadFileService.saveImageTienda(file);
             tienda.setImagen(nombreImagen);
         } else {
-            throw new IllegalArgumentException("No se puede crear un producto existente.");
+            throw new IllegalArgumentException("No se puede crear una tienda existente.");
         }
 
         tiendaRepository.save(tienda);
