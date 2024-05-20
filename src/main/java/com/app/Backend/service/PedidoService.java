@@ -1,8 +1,8 @@
 package com.app.Backend.service;
 
 import com.app.Backend.persistence.entities.Pedido;
-import com.app.Backend.persistence.entities.Tienda.Tienda;
-import com.app.Backend.persistence.entities.Usuario.Usuario;
+import com.app.Backend.persistence.entities.Tienda;
+import com.app.Backend.persistence.entities.Usuario;
 
 import java.util.List;
 import java.util.Optional;

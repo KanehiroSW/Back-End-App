@@ -1,8 +1,7 @@
 package com.app.Backend.persistence.repository;
 
-import com.app.Backend.persistence.entities.Usuario.Usuario;
+import com.app.Backend.persistence.entities.Usuario;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -14,10 +13,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     /*ENCONTRAR UN USUARIO POR EMAIL*/
     @Query(" SELECT U FROM Usuario U WHERE U.dni = :dni ")
     Optional<Usuario> findUsuarioByDni(@Param("dni") String dni);
-
-    /*ENCONTRAR UN USUARIO POR ID*/
-    @Query(" SELECT U FROM Usuario U WHERE U.idUsuario = :idUsuario ")
-    Optional<Usuario> findUsuarioById(@Param("idUsuario") Long idUsuario);
 
     /*ACTUALIZAR USUARIO*/
     @Modifying()

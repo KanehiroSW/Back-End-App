@@ -20,10 +20,6 @@ public class PedidoController {
     @Autowired
     private ProductoService productoService;
     @Autowired
-    private TiendaService tiendaService;
-    @Autowired
-    private UsuarioService usuarioService;
-    @Autowired
     private DetallePedidoService detallePedidoService;
 
     List<DetallePedido> detallePedidos = new ArrayList<DetallePedido>();

@@ -10,7 +10,7 @@ public interface ProductoService {
     List<Producto> getAllProductos();
     Optional<Producto> getProductoById(Long idProducto);
     Optional<Producto> getProductoByNombre(String nombre);
-    Producto saveProducto(Producto producto, MultipartFile file) throws IOException;
+    Producto saveProducto(Producto producto, MultipartFile file, Long tiendaId) throws IOException;
     void updateProducto(Long idProducto, Producto producto, MultipartFile file) throws IOException;
     void deleteProductoById(Long idProducto);
 }

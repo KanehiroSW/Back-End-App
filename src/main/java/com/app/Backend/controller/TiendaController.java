@@ -1,34 +1,23 @@
 package com.app.Backend.controller;
 
-import com.app.Backend.controller.dto.TiendaDTO;
-import com.app.Backend.persistence.entities.Tienda.*;
+import com.app.Backend.persistence.entities.Tienda;
 import com.app.Backend.service.TiendaService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/tienda")
-@RequiredArgsConstructor
-@CrossOrigin
+@RequestMapping("/api/tienda")
 public class TiendaController {
 
-    private final TiendaService tiendaService;
+    @Autowired
+    private TiendaService tiendaService;
 
-    @GetMapping(value = "{idTienda}")
-    public ResponseEntity<TiendaDTO> getStore(@PathVariable Long idTienda)
-    {
-        TiendaDTO tiendaDTO = tiendaService.getTienda(idTienda);
-        if (tiendaDTO == null)
-        {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(tiendaDTO);
-    }
-
-    @PutMapping()
-    public ResponseEntity<TiendaResponse> updateTienda(@RequestBody TiendaRequest tiendaRequest)
-    {
-        return ResponseEntity.ok(tiendaService.actualizarTienda(tiendaRequest));
+    @GetMapping("/all")
+    public List<Tienda> getAllTiendas() {
+        return tiendaService.getAllTiendas();
     }
 }

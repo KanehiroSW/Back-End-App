@@ -1,4 +1,4 @@
-package com.app.Backend.persistence.entities.Usuario;
+package com.app.Backend.persistence.entities;
 
 import com.app.Backend.persistence.entities.Pedido;
 import jakarta.persistence.*;

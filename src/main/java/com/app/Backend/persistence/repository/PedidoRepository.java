@@ -1,11 +1,9 @@
 package com.app.Backend.persistence.repository;
 
 import com.app.Backend.persistence.entities.Pedido;
-import com.app.Backend.persistence.entities.Tienda.Tienda;
-import com.app.Backend.persistence.entities.Usuario.Usuario;
-import jakarta.transaction.Transactional;
+import com.app.Backend.persistence.entities.Tienda;
+import com.app.Backend.persistence.entities.Usuario;
 import org.springframework.data.jpa.repository.*;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 

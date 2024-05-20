@@ -2,6 +2,7 @@ package com.app.Backend.service;
 
 import com.app.Backend.exception.ProductoNotFoundException;
 import com.app.Backend.persistence.entities.Producto;
+import com.app.Backend.persistence.entities.Tienda;
 import com.app.Backend.persistence.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Autowired
     private ProductoRepository productoRepository;
+
+    @Autowired
+    private TiendaService tiendaService;
 
     @Autowired
     private UploadFileService uploadFileService;
@@ -43,10 +47,12 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public Producto saveProducto(@RequestBody Producto producto, MultipartFile file) throws IOException {
+    public Producto saveProducto(Producto producto, MultipartFile file, Long tiendaId) throws IOException {
         if (producto.getIdProducto() == null) {
-            String nombreImagen= uploadFileService.saveImageProducto(file);
+            Tienda tienda = tiendaService.getTiendaById(tiendaId).orElseThrow(() -> new IllegalArgumentException("Tienda no encontrada."));
+            String nombreImagen = uploadFileService.saveImageProducto(file, tienda.getNombreTienda());
             producto.setImagen(nombreImagen);
+            producto.setTienda(tienda);
         } else {
             throw new IllegalArgumentException("No se puede crear un producto existente.");
         }
@@ -72,8 +78,8 @@ public class ProductoServiceImpl implements ProductoService {
                 if (!productoBD.getImagen().equals("default.jpg")) {
                     uploadFileService.deleteImageProducto(productoBD.getImagen());
                 }
-                String nombreImagen = uploadFileService.saveImageProducto(file);
-                producto.setImagen(nombreImagen);
+//                String nombreImagen = uploadFileService.saveImageProducto(file);
+//                producto.setImagen(nombreImagen);
 //                producto.setUsuario(productoBD.getUsuario());
                 productoRepository.save(productoBD);
             }

@@ -1,6 +1,7 @@
-package com.app.Backend.persistence.entities.Tienda;
+package com.app.Backend.persistence.entities;
 
 import com.app.Backend.persistence.entities.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,7 +17,7 @@ import java.util.List;
 @Table(
         name = "tbl_tiendas"
 )
-public class Tienda implements UserDetails {
+public class Tienda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tienda")
@@ -51,35 +52,6 @@ public class Tienda implements UserDetails {
     private List<Pedido> pedidos;
 
     @OneToMany(mappedBy = "tienda")
+    @JsonManagedReference
     private List<Producto> productos;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return dniPropietario;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

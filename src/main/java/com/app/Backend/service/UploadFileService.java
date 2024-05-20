@@ -25,12 +25,12 @@ public class UploadFileService {
         file.delete();
     }
 
-    public String saveImageProducto(MultipartFile file) throws IOException {
+    public String saveImageProducto(MultipartFile file, String nombreTienda) throws IOException {
         if(!file.isEmpty()) {
             byte [] bytes = file.getBytes();
-            Path path = Paths.get(folder+file.getOriginalFilename());
+            Path path = Paths.get(folder+ "Productos/" + nombreTienda + "-" +file.getOriginalFilename());
             Files.write(path, bytes);
-            return file.getOriginalFilename();
+            return nombreTienda + "-" + file.getOriginalFilename();
         }
         return "default.jpg";
     }

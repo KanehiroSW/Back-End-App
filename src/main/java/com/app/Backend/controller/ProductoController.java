@@ -4,6 +4,7 @@ import com.app.Backend.persistence.entities.Producto;
 import com.app.Backend.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,8 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin
-@RequestMapping("/api/productos")
+@RequestMapping("/api/producto")
 public class ProductoController {
 
     @Autowired
@@ -25,8 +25,12 @@ public class ProductoController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Producto registrarProducto(@RequestBody Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
-        return productoService.saveProducto(producto, file);
+    public ResponseEntity<Producto> registrarProducto(
+            @RequestParam("tiendaId") Long tiendaId,
+            @RequestParam("img") MultipartFile file,
+            @RequestPart("producto") Producto producto) throws IOException {
+        Producto savedProducto = productoService.saveProducto(producto, file, tiendaId);
+        return new ResponseEntity<>(savedProducto, HttpStatus.CREATED);
     }
 
     @PostMapping("/update/{idProducto}")

@@ -2,8 +2,8 @@ package com.app.Backend.service;
 
 import com.app.Backend.exception.ProductoNotFoundException;
 import com.app.Backend.persistence.entities.Pedido;
-import com.app.Backend.persistence.entities.Tienda.Tienda;
-import com.app.Backend.persistence.entities.Usuario.Usuario;
+import com.app.Backend.persistence.entities.Tienda;
+import com.app.Backend.persistence.entities.Usuario;
 import com.app.Backend.persistence.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
