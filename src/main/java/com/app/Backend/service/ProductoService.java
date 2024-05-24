@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 public interface ProductoService {
-    List<Producto> getAllProductos();
+    List<Producto> getAllProductos(Long idTienda);
     Optional<Producto> getProductoById(Long idProducto);
     Optional<Producto> getProductoByNombre(String nombre);
     Producto saveProducto(Producto producto, MultipartFile file, Long tiendaId) throws IOException;

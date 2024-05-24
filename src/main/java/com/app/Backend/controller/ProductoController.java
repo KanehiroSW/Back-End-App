@@ -19,8 +19,8 @@ public class ProductoController {
     private ProductoService productoService;
 
     @GetMapping("/list")
-    public List<Producto> listaProductos() {
-        return productoService.getAllProductos();
+    public List<Producto> listaProductos(@RequestParam Long idTienda) {
+        return productoService.getAllProductos(idTienda);
     }
 
     @PostMapping("/create")
@@ -28,7 +28,15 @@ public class ProductoController {
     public ResponseEntity<Producto> registrarProducto(
             @RequestParam("tiendaId") Long tiendaId,
             @RequestParam("img") MultipartFile file,
-            @RequestPart("producto") Producto producto) throws IOException {
+            @RequestParam("nombreProducto") String nombreProducto,
+            @RequestParam("descripcion") String descripcion,
+            @RequestParam("precio") Double precio) throws IOException {
+
+        Producto producto = new Producto();
+        producto.setNombreProducto(nombreProducto);
+        producto.setDescripcion(descripcion);
+        producto.setPrecio(precio);
+
         Producto savedProducto = productoService.saveProducto(producto, file, tiendaId);
         return new ResponseEntity<>(savedProducto, HttpStatus.CREATED);
     }

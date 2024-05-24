@@ -24,8 +24,8 @@ public class ProductoServiceImpl implements ProductoService {
     private UploadFileService uploadFileService;
 
     @Override
-    public List<Producto> getAllProductos() {
-        return productoRepository.findAllProductos();
+    public List<Producto> getAllProductos(Long idTienda) {
+        return productoRepository.findAllProductos(idTienda);
     }
 
     @Override

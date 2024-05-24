@@ -11,8 +11,8 @@ import java.util.Optional;
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
     /*LISTAR TODOS LOS PRODUCTOS*/
-    @Query(" SELECT P FROM Producto P WHERE P.estado = 1 ")
-    List<Producto> findAllProductos();
+    @Query(" SELECT P FROM Producto P WHERE P.estado = 1 AND P.tienda.idTienda = :idTienda")
+    List<Producto> findAllProductos(@Param("idTienda") Long idTienda);
 
     /*ENCONTRAR PRODUCTO POR NOMBRE*/
     @Query(" SELECT P FROM Producto P WHERE P.nombreProducto = :nombre ")
