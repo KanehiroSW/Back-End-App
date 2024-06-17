@@ -1,6 +1,7 @@
 package com.app.Backend.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,7 +27,7 @@ public class Producto {
     private String imagen;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonIgnore
     private Tienda tienda;
 
     private int estado;

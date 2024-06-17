@@ -1,6 +1,8 @@
 package com.app.Backend.persistence.entities;
 
 import com.app.Backend.persistence.entities.Pedido;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +18,7 @@ import java.util.*;
 @Table(
         name = "tbl_usuarios"
 )
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +44,7 @@ public class Usuario {
             unique = true,
             nullable = false
     )
-    private String usuario;
+    private String nombre_usuario;
     private String password;
 
     @OneToMany(mappedBy = "usuario")

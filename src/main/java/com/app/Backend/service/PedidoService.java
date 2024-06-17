@@ -1,5 +1,6 @@
 package com.app.Backend.service;
 
+import com.app.Backend.persistence.entities.DetallePedido;
 import com.app.Backend.persistence.entities.Pedido;
 import com.app.Backend.persistence.entities.Tienda;
 import com.app.Backend.persistence.entities.Usuario;

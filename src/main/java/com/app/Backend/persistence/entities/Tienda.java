@@ -1,6 +1,7 @@
 package com.app.Backend.persistence.entities;
 
 import com.app.Backend.persistence.entities.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -49,9 +50,10 @@ public class Tienda {
     private int estado;
 
     @OneToMany(mappedBy = "tienda")
+    @JsonIgnore
     private List<Pedido> pedidos;
 
     @OneToMany(mappedBy = "tienda")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Producto> productos;
 }

@@ -1,5 +1,8 @@
 package com.app.Backend.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.*;
@@ -33,13 +36,16 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "id_tienda")
+    @JsonIgnore
     private Tienda tienda;
 
     @OneToMany(
             mappedBy = "pedido",
-            cascade = CascadeType.ALL
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    private List<DetallePedido> detallePedidos;
+    @JsonIgnore
+    private List<DetallePedido> detallePedidos = new ArrayList<>();
 
     @Column(name = "total_pedido")
     private double totalPedido;

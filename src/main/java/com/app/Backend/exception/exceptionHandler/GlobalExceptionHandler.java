@@ -1,5 +1,6 @@
 package com.app.Backend.exception.exceptionHandler;
 
+import com.app.Backend.exception.PedidoNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,5 +18,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handlerRuntimeException(RuntimeException ex)
     {
         return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_GATEWAY);
+    }
+
+    @ExceptionHandler(PedidoNotFoundException.class)
+    public ResponseEntity<String> handlePedidoNotFoundException(PedidoNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
     }
 }
