@@ -47,13 +47,35 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public List<Pedido> getPedidosByUsuario(Usuario usuario) {
-        return pedidoRepository.findByUsuario(usuario);
+    public List<Pedido> getHistorialPedidos(Usuario usuario) {
+        return pedidoRepository.findHistorialPedidos(usuario);
+    }
+
+    @Override
+    public List<Pedido> getPendingPedidos(Usuario usuario) {
+        return pedidoRepository.findPendingPedidos(usuario);
     }
 
     @Override
     public List<Pedido> getPedidosByTienda(Tienda tienda) {
         return pedidoRepository.findByTienda(tienda);
+    }
+
+    @Override
+    public List<Pedido> getPendingPedidosByTienda(Tienda tienda) {
+        return pedidoRepository.findPendingPedidosByTienda(tienda);
+    }
+
+    @Override
+    public Pedido updatePedidoStatus(Long idPedido, EstadoPedido estado) {
+        Optional<Pedido> optionalPedido = pedidoRepository.findById(idPedido);
+        if (optionalPedido.isPresent()) {
+            Pedido pedido = optionalPedido.get();
+            pedido.setEstadoPedido(estado);
+            return pedidoRepository.save(pedido);
+        } else {
+            throw new ProductoNotFoundException("¡Pedido no encontrado!");
+        }
     }
 
     @Override

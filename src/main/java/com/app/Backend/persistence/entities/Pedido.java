@@ -1,8 +1,6 @@
 package com.app.Backend.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.*;
@@ -27,6 +25,7 @@ public class Pedido {
     @Column(name = "direccion_entrega")
     private String direccionEntrega;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "fecha_pedido")
     private Date fechaPedido;
 
@@ -36,7 +35,6 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "id_tienda")
-    @JsonIgnore
     private Tienda tienda;
 
     @OneToMany(
@@ -44,7 +42,6 @@ public class Pedido {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JsonIgnore
     private List<DetallePedido> detallePedidos = new ArrayList<>();
 
     @Column(name = "total_pedido")

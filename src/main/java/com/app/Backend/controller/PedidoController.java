@@ -1,9 +1,7 @@
 package com.app.Backend.controller;
 
-import com.app.Backend.persistence.entities.DetallePedido;
-import com.app.Backend.persistence.entities.Pedido;
-import com.app.Backend.persistence.entities.Tienda;
-import com.app.Backend.persistence.entities.Usuario;
+import com.app.Backend.exception.ProductoNotFoundException;
+import com.app.Backend.persistence.entities.*;
 import com.app.Backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,19 +44,37 @@ public class PedidoController {
         }
     }
 
-    @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<List<Pedido>> getPedidosByUsuario(@PathVariable Long usuarioId) {
+    @GetMapping("/usuario/{usuarioId}/historial")
+    public ResponseEntity<List<Pedido>> getHistorialPedidos(@PathVariable Long usuarioId) {
         Usuario usuario = new Usuario();
         usuario.setIdUsuario(usuarioId);
-        List<Pedido> pedidos = pedidoService.getPedidosByUsuario(usuario);
+        List<Pedido> pedidos = pedidoService.getHistorialPedidos(usuario);
         return ResponseEntity.ok(pedidos);
     }
 
-    @GetMapping("/tienda/{tiendaId}")
-    public ResponseEntity<List<Pedido>> getPedidosByTienda(@PathVariable Long tiendaId) {
+    @GetMapping("/usuario/{usuarioId}/pendientes")
+    public ResponseEntity<List<Pedido>> getPendingPedidos(@PathVariable Long usuarioId) {
+        Usuario usuario = new Usuario();
+        usuario.setIdUsuario(usuarioId);
+        List<Pedido> pedidos = pedidoService.getPendingPedidos(usuario);
+        return ResponseEntity.ok(pedidos);
+    }
+
+    @GetMapping("/tienda/{tiendaId}/pendientes")
+    public ResponseEntity<List<Pedido>> getPendingPedidosByTienda(@PathVariable Long tiendaId) {
         Tienda tienda = new Tienda();
         tienda.setIdTienda(tiendaId);
-        List<Pedido> pedidos = pedidoService.getPedidosByTienda(tienda);
+        List<Pedido> pedidos = pedidoService.getPendingPedidosByTienda(tienda);
         return ResponseEntity.ok(pedidos);
+    }
+
+    @PutMapping("/update/{idPedido}/{estado}")
+    public ResponseEntity<Pedido> updatePedidoStatus(@PathVariable Long idPedido, @PathVariable EstadoPedido estado) {
+        try {
+            Pedido updatedPedido = pedidoService.updatePedidoStatus(idPedido, estado);
+            return ResponseEntity.ok(updatedPedido);
+        } catch (ProductoNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
