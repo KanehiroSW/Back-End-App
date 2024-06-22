@@ -79,6 +79,21 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
+    public List<Pedido> getHistorialPedidosByTienda(Tienda tienda) {
+        return pedidoRepository.findHistorialPedidosByTienda(tienda);
+    }
+
+    @Override
+    public List<Pedido> getPedidosEnProcesoByTienda(Tienda tienda) {
+        return pedidoRepository.findPedidosEnProcesoByTienda(tienda);
+    }
+
+    @Override
+    public List<Pedido> getPedidosByTiendaDelivery(Tienda tienda) {
+        return pedidoRepository.findPedidosByTiendaDelivery(tienda);
+    }
+
+    @Override
     public String generarNumeroSerie() {
         int numero = 0;
         String numeroUnido = "";

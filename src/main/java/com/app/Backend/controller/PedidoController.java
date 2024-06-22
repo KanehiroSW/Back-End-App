@@ -77,4 +77,28 @@ public class PedidoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/tienda/{tiendaId}/historial")
+    public ResponseEntity<List<Pedido>> getHistorialPedidosByTienda(@PathVariable Long tiendaId) {
+        Tienda tienda = new Tienda();
+        tienda.setIdTienda(tiendaId);
+        List<Pedido> pedidos = pedidoService.getHistorialPedidosByTienda(tienda);
+        return ResponseEntity.ok(pedidos);
+    }
+
+    @GetMapping("/tienda/{tiendaId}/gestion")
+    public ResponseEntity<List<Pedido>> getPedidosEnProcesoByTienda(@PathVariable Long tiendaId) {
+        Tienda tienda = new Tienda();
+        tienda.setIdTienda(tiendaId);
+        List<Pedido> pedidos = pedidoService.getPedidosEnProcesoByTienda(tienda);
+        return ResponseEntity.ok(pedidos);
+    }
+
+    @GetMapping("/tienda/{tiendaId}/delivery")
+    public ResponseEntity<List<Pedido>> getPedidosByTiendaDelivery(@PathVariable Long tiendaId) {
+        Tienda tienda = new Tienda();
+        tienda.setIdTienda(tiendaId);
+        List<Pedido> pedidos = pedidoService.getPedidosByTiendaDelivery(tienda);
+        return ResponseEntity.ok(pedidos);
+    }
 }

@@ -13,6 +13,9 @@ public interface PedidoService {
     List<Pedido> getHistorialPedidos(Usuario usuario);
     List<Pedido> getPendingPedidos(Usuario usuario);
     List<Pedido> getPedidosByTienda(Tienda tienda);
-    List<Pedido> getPendingPedidosByTienda(Tienda tienda); // Nuevo método
-    Pedido updatePedidoStatus(Long idPedido, EstadoPedido estado); // Nuevo método
+    List<Pedido> getPendingPedidosByTienda(Tienda tienda);
+    Pedido updatePedidoStatus(Long idPedido, EstadoPedido estado);
+    List<Pedido> getHistorialPedidosByTienda(Tienda tienda);
+    List<Pedido> getPedidosEnProcesoByTienda(Tienda tienda);
+    List<Pedido> getPedidosByTiendaDelivery(Tienda tienda);
 }

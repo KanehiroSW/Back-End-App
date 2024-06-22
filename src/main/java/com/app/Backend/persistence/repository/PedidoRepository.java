@@ -22,8 +22,18 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Query("SELECT p FROM Pedido p WHERE p.tienda = :tienda AND p.estadoPedido = 'PENDIENTE'")
     List<Pedido> findPendingPedidosByTienda(@Param("tienda") Tienda tienda);
+
     List<Pedido> findByTienda(Tienda tienda);
 
     @Query("SELECT p FROM Pedido p WHERE DATE(p.fechaPedido) = :fecha AND p.estadoPedido = 'ENTREGADO'")
     List<Pedido> findByFechaPedido(@Param("fecha") Date fecha);
+
+    @Query("SELECT p FROM Pedido p WHERE p.tienda = :tienda AND (p.estadoPedido = 'ENTREGADO' OR p.estadoPedido = 'RECHAZADO')")
+    List<Pedido> findHistorialPedidosByTienda(@Param("tienda") Tienda tienda);
+
+    @Query("SELECT p FROM Pedido p WHERE p.tienda = :tienda AND (p.estadoPedido = 'ACEPTADO' OR p.estadoPedido = 'EN_PREPARACION')")
+    List<Pedido> findPedidosEnProcesoByTienda(@Param("tienda") Tienda tienda);
+
+    @Query("SELECT p FROM Pedido p WHERE p.tienda = :tienda AND (p.estadoPedido = 'ORDEN_LISTA' OR p.estadoPedido = 'EN_CAMINO')")
+    List<Pedido> findPedidosByTiendaDelivery(@Param("tienda") Tienda tienda);
 }
