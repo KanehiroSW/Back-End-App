@@ -70,8 +70,6 @@ public class PedidoServiceImpl implements PedidoService {
         return numeroUnido;
     }
 
-    /*----- */
-
     @Override
     public List<Pedido> getAllPedidos() {
         return pedidoRepository.findAll();

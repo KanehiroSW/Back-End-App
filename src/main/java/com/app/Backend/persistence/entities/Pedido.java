@@ -37,6 +37,10 @@ public class Pedido {
     @JoinColumn(name = "id_tienda")
     private Tienda tienda;
 
+    @ManyToOne
+    @JoinColumn(name = "id_repartidor")
+    private Repartidor repartidor;
+
     @OneToMany(
             mappedBy = "pedido",
             cascade = CascadeType.ALL,
