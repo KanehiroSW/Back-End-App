@@ -78,9 +78,6 @@ public class ProductoServiceImpl implements ProductoService {
                 if (!productoBD.getImagen().equals("default.jpg")) {
                     uploadFileService.deleteImageProducto(productoBD.getImagen());
                 }
-//                String nombreImagen = uploadFileService.saveImageProducto(file);
-//                producto.setImagen(nombreImagen);
-//                producto.setUsuario(productoBD.getUsuario());
                 productoRepository.save(productoBD);
             }
         } else {

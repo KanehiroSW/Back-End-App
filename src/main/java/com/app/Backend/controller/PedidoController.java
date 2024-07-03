@@ -6,11 +6,8 @@ import com.app.Backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/pedido")
@@ -28,6 +25,22 @@ public class PedidoController {
         return ResponseEntity.ok(savedPedido);
     }
 
+    @GetMapping("/usuario/{usuarioId}/pendientes")
+    public ResponseEntity<List<Pedido>> getPendingPedidos(@PathVariable Long usuarioId) {
+        Usuario usuario = new Usuario();
+        usuario.setIdUsuario(usuarioId);
+        List<Pedido> pedidos = pedidoService.getPendingPedidos(usuario);
+        return ResponseEntity.ok(pedidos);
+    }
+
+    @GetMapping("/usuario/{usuarioId}/historial")
+    public ResponseEntity<List<Pedido>> getHistorialPedidos(@PathVariable Long usuarioId) {
+        Usuario usuario = new Usuario();
+        usuario.setIdUsuario(usuarioId);
+        List<Pedido> pedidos = pedidoService.getHistorialPedidos(usuario);
+        return ResponseEntity.ok(pedidos);
+    }
+
     @GetMapping("/list")
     public ResponseEntity<List<Pedido>> getAllPedidos() {
         List<Pedido> pedidos = pedidoService.getAllPedidos();
@@ -42,22 +55,6 @@ public class PedidoController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @GetMapping("/usuario/{usuarioId}/historial")
-    public ResponseEntity<List<Pedido>> getHistorialPedidos(@PathVariable Long usuarioId) {
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(usuarioId);
-        List<Pedido> pedidos = pedidoService.getHistorialPedidos(usuario);
-        return ResponseEntity.ok(pedidos);
-    }
-
-    @GetMapping("/usuario/{usuarioId}/pendientes")
-    public ResponseEntity<List<Pedido>> getPendingPedidos(@PathVariable Long usuarioId) {
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(usuarioId);
-        List<Pedido> pedidos = pedidoService.getPendingPedidos(usuario);
-        return ResponseEntity.ok(pedidos);
     }
 
     @GetMapping("/tienda/{tiendaId}/pendientes")
@@ -78,14 +75,6 @@ public class PedidoController {
         }
     }
 
-    @GetMapping("/tienda/{tiendaId}/historial")
-    public ResponseEntity<List<Pedido>> getHistorialPedidosByTienda(@PathVariable Long tiendaId) {
-        Tienda tienda = new Tienda();
-        tienda.setIdTienda(tiendaId);
-        List<Pedido> pedidos = pedidoService.getHistorialPedidosByTienda(tienda);
-        return ResponseEntity.ok(pedidos);
-    }
-
     @GetMapping("/tienda/{tiendaId}/gestion")
     public ResponseEntity<List<Pedido>> getPedidosEnProcesoByTienda(@PathVariable Long tiendaId) {
         Tienda tienda = new Tienda();
@@ -99,6 +88,14 @@ public class PedidoController {
         Tienda tienda = new Tienda();
         tienda.setIdTienda(tiendaId);
         List<Pedido> pedidos = pedidoService.getPedidosByTiendaDelivery(tienda);
+        return ResponseEntity.ok(pedidos);
+    }
+
+    @GetMapping("/tienda/{tiendaId}/historial")
+    public ResponseEntity<List<Pedido>> getHistorialPedidosByTienda(@PathVariable Long tiendaId) {
+        Tienda tienda = new Tienda();
+        tienda.setIdTienda(tiendaId);
+        List<Pedido> pedidos = pedidoService.getHistorialPedidosByTienda(tienda);
         return ResponseEntity.ok(pedidos);
     }
 }

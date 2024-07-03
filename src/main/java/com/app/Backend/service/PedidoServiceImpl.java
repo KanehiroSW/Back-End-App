@@ -18,11 +18,6 @@ public class PedidoServiceImpl implements PedidoService {
     private DetallePedidoRepository detallePedidoRepository;
 
     @Override
-    public List<Pedido> getAllPedidos() {
-        return pedidoRepository.findAll();
-    }
-
-    @Override
     public Pedido savePedido(Pedido pedido) {
         pedido.setNumeroSerie(generarNumeroSerie());
         pedido.setFechaPedido(new Date());
@@ -38,15 +33,6 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public Optional<Pedido> getPedidoById(Long idPedido) {
-        if (idPedido != null) {
-            return pedidoRepository.findById(idPedido);
-        } else {
-            throw new ProductoNotFoundException("¡Pedido no encontrado!");
-        }
-    }
-
-    @Override
     public List<Pedido> getHistorialPedidos(Usuario usuario) {
         return pedidoRepository.findHistorialPedidos(usuario);
     }
@@ -54,43 +40,6 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public List<Pedido> getPendingPedidos(Usuario usuario) {
         return pedidoRepository.findPendingPedidos(usuario);
-    }
-
-    @Override
-    public List<Pedido> getPedidosByTienda(Tienda tienda) {
-        return pedidoRepository.findByTienda(tienda);
-    }
-
-    @Override
-    public List<Pedido> getPendingPedidosByTienda(Tienda tienda) {
-        return pedidoRepository.findPendingPedidosByTienda(tienda);
-    }
-
-    @Override
-    public Pedido updatePedidoStatus(Long idPedido, EstadoPedido estado) {
-        Optional<Pedido> optionalPedido = pedidoRepository.findById(idPedido);
-        if (optionalPedido.isPresent()) {
-            Pedido pedido = optionalPedido.get();
-            pedido.setEstadoPedido(estado);
-            return pedidoRepository.save(pedido);
-        } else {
-            throw new ProductoNotFoundException("¡Pedido no encontrado!");
-        }
-    }
-
-    @Override
-    public List<Pedido> getHistorialPedidosByTienda(Tienda tienda) {
-        return pedidoRepository.findHistorialPedidosByTienda(tienda);
-    }
-
-    @Override
-    public List<Pedido> getPedidosEnProcesoByTienda(Tienda tienda) {
-        return pedidoRepository.findPedidosEnProcesoByTienda(tienda);
-    }
-
-    @Override
-    public List<Pedido> getPedidosByTiendaDelivery(Tienda tienda) {
-        return pedidoRepository.findPedidosByTiendaDelivery(tienda);
     }
 
     @Override
@@ -119,5 +68,58 @@ public class PedidoServiceImpl implements PedidoService {
             numeroUnido = "000000"+String.valueOf(numero);
         }
         return numeroUnido;
+    }
+
+    /*----- */
+
+    @Override
+    public List<Pedido> getAllPedidos() {
+        return pedidoRepository.findAll();
+    }
+
+    @Override
+    public Optional<Pedido> getPedidoById(Long idPedido) {
+        if (idPedido != null) {
+            return pedidoRepository.findById(idPedido);
+        } else {
+            throw new ProductoNotFoundException("¡Pedido no encontrado!");
+        }
+    }
+
+    @Override
+    public List<Pedido> getPedidosByTienda(Tienda tienda) {
+        return pedidoRepository.findByTienda(tienda);
+    }
+
+    @Override
+    public List<Pedido> getPendingPedidosByTienda(Tienda tienda) {
+        return pedidoRepository.findPendingPedidosByTienda(tienda);
+    }
+
+    @Override
+    public Pedido updatePedidoStatus(Long idPedido, EstadoPedido estado) {
+        Optional<Pedido> optionalPedido = pedidoRepository.findById(idPedido);
+        if (optionalPedido.isPresent()) {
+            Pedido pedido = optionalPedido.get();
+            pedido.setEstadoPedido(estado);
+            return pedidoRepository.save(pedido);
+        } else {
+            throw new ProductoNotFoundException("¡Pedido no encontrado!");
+        }
+    }
+
+    @Override
+    public List<Pedido> getPedidosEnProcesoByTienda(Tienda tienda) {
+        return pedidoRepository.findPedidosEnProcesoByTienda(tienda);
+    }
+
+    @Override
+    public List<Pedido> getPedidosByTiendaDelivery(Tienda tienda) {
+        return pedidoRepository.findPedidosByTiendaDelivery(tienda);
+    }
+
+    @Override
+    public List<Pedido> getHistorialPedidosByTienda(Tienda tienda) {
+        return pedidoRepository.findHistorialPedidosByTienda(tienda);
     }
 }
